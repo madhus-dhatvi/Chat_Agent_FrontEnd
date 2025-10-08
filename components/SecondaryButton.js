@@ -13,11 +13,10 @@ const styles = StyleSheet.create({
     pill: {
         backgroundColor: '#fff',
         paddingVertical: 8,
+        paddingHorizontal: 8,
         borderRadius: 10,
-        alignItems: 'center',
         elevation: 2,
         marginBottom: 5,
-        paddingHorizontal: 8,
 
 
     },
