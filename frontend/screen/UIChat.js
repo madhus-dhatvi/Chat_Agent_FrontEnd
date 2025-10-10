@@ -158,7 +158,7 @@ export default function ChatScreen() {
                                 {subOption}
                             </SecondaryButton>
                         ))}
-                        <BackToMenuButton/>
+                        <BackToMenuButton />
 
                     </BotContainer>
 
@@ -178,11 +178,12 @@ export default function ChatScreen() {
         <View style={styles.container}>
             <Header />
             <FlatList
+                style={{ paddingBottom: 50 }}
                 ref={listRef}
                 data={messages}
                 keyExtractor={(item, index) => item.id || index.toString()}
                 renderItem={renderMessage}
-                contentContainerStyle={{ padding: 16, paddingBottom: 20, marginHorizontal: -8, }}
+                contentContainerStyle={{ padding: 16, marginHorizontal: -8, }}
                 ListFooterComponent={
                     isTyping ? (
                         <TypeContainer />

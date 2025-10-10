@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         marginBottom: 15,
         marginLeft: 3,
-        width: "80%",
+        maxWidth: "80%",
         alignItems: 'flex-start'
         // marginRight: 10,
     },

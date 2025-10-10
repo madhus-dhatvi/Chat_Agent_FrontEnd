@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     },
     msgContainer: {
         maxWidth: '75%',
-        width: "60%",
+        // width: "60%",
         padding: 12,
         borderRadius: 14,
         backgroundColor: '#d9d9d9',

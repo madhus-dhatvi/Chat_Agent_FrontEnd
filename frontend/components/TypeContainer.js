@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
+
     },
     typing: {
         fontStyle: "italic",
