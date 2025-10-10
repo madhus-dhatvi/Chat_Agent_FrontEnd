@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         marginLeft: 3,
         width: "80%",
-        alignItems: "center"
+        alignItems: 'flex-start'
         // marginRight: 10,
     },
     buttonsContainer: {

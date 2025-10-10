@@ -11,6 +11,7 @@ import Modal from "../components/Modal";
 import { Ionicons } from '@expo/vector-icons';
 import BackToMenuButton from "../components/BackToMenuButton";
 import TypeContainer from "../components/TypeContainer";
+import KeyBoard from "../components/KeyBoard";
 
 
 export default function ChatScreen() {
@@ -157,9 +158,10 @@ export default function ChatScreen() {
                                 {subOption}
                             </SecondaryButton>
                         ))}
-                        <BackToMenuButton />
+                        <BackToMenuButton/>
 
                     </BotContainer>
+
                 );
             }
 
@@ -193,6 +195,29 @@ export default function ChatScreen() {
                 }
                 keyboardShouldPersistTaps="handled"
             />
+            <KeyBoard style={styles.keyboard}
+                onSend={(message) => {
+                    const userObj = {
+                        id: Date.now().toString(),
+                        type: "user",
+                        content: message,
+                    };
+                    addMessages(userObj);
+
+                    // optionally trigger bot response
+                    setIsTyping(true);
+                    setTimeout(() => {
+                        setIsTyping(false);
+                        const botObj = {
+                            id: (Date.now() + 1).toString(),
+                            type: "bot",
+                            content: "I received: " + message,
+                        };
+                        addMessages(botObj);
+                    }, 1500);
+                }}
+            />
+
             <Modal SHEET_HEIGHT={SHEET_HEIGHT} closeMenu={closeMenu} isSheetMounted={isSheetMounted} sheetStyle={sheetStyle} handleGenerateOptions={handleGenerateOptions} />
         </View>
     );
@@ -203,7 +228,9 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 25,
     },
-
+    keyboard: {
+        textAlign: 'justify'
+    }
 });
 
 

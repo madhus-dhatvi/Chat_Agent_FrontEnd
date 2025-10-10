@@ -4,7 +4,9 @@ export default function SecondaryButton({ children, onPress }) {
     return (
         <Pressable onPress={onPress} style={({ pressed }) => [styles.pill, pressed && { opacity: 0.5 }]}
         >
-            <Text style={styles.pillText}>{children}</Text>
+            <View>
+             <Text style={styles.pillText}>{children}</Text>
+            </View>
         </Pressable>
     );
 
