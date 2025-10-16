@@ -5,7 +5,7 @@ export default function TypeContainer() {
 
     return (
         <View style={styles.container}>
-            <Avatar initials={"SJ"} />
+            <Avatar mode="bot" />
             <Text style={styles.typing}>Bot is typing...</Text>
         </View>
     )

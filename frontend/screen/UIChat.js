@@ -118,7 +118,7 @@ export default function ChatScreen() {
                 content: res,
             };
             addMessages(botObj);
-        }, 1500);
+        }, 1200);
     }
     function renderMessage({ item }) {
         if (item.type === "bot") {
@@ -158,7 +158,7 @@ export default function ChatScreen() {
                                 {subOption}
                             </SecondaryButton>
                         ))}
-                        <BackToMenuButton />
+                        <BackToMenuButton openMenu={openMenu} />
 
                     </BotContainer>
 
@@ -178,12 +178,12 @@ export default function ChatScreen() {
         <View style={styles.container}>
             <Header />
             <FlatList
-                style={{ paddingBottom: 50 }}
+                style={{ paddingBottom: 100 }}
                 ref={listRef}
                 data={messages}
                 keyExtractor={(item, index) => item.id || index.toString()}
                 renderItem={renderMessage}
-                contentContainerStyle={{ padding: 16, marginHorizontal: -8, }}
+                contentContainerStyle={{ padding: 12, marginHorizontal: -8, }}
                 ListFooterComponent={
                     isTyping ? (
                         <TypeContainer />

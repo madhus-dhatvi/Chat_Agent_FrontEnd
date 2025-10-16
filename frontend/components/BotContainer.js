@@ -4,7 +4,7 @@ import Avatar from "./Avatar";
 export default function BotContainer({ children, content }) {
 
     return (<View style={styles.botOuterContainer}>
-        <Avatar initials="SJ" size={40} />
+        <Avatar mode="bot" size={40} />
         <View style={styles.botInnerContainer}>
 
             {(content !== undefined && content !== "") && <Text styles={{ marginBottom: 2 }}>
