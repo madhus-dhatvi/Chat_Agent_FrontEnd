@@ -12,6 +12,8 @@ import { Ionicons } from '@expo/vector-icons';
 import BackToMenuButton from "../components/BackToMenuButton";
 import TypeContainer from "../components/TypeContainer";
 import KeyBoard from "../components/KeyBoard";
+import { dataFetch } from "../components/util/auth";
+
 
 
 export default function ChatScreen() {
@@ -22,6 +24,7 @@ export default function ChatScreen() {
     const sheetAnim = useRef(new Animated.Value(SHEET_HEIGHT)).current;
     const [isSheetMounted, setIsSheetMounted] = useState(false);
     const sheetStyle = { transform: [{ translateY: sheetAnim }] };
+
 
     const openMenu = () => {
         setIsSheetMounted(true);
@@ -48,13 +51,15 @@ export default function ChatScreen() {
         }
     }, [messages, isTyping]);
 
-    function handleGenerateOptions(option, isMenu) {
-        const item = isMenu ? dummyData.find((i) => i.category === option) : recentFaqsData.find((i) => i.category === option);
-        const subOptions = item.sub_queries.map((i) => i.question);
+    function handleGenerateOptions(selectedOption, questions) {
+        // const item = isMenu ? dummyData.find((i) => i.category === option) : recentFaqsData.find((i) => i.category === option);
+        // const subOptions = item.sub_queries.map((i) => i.question);
+        console.log('handle generate options...');
+        console.log(selectedOption);
         const userObj = {
             id: Date.now().toString(),
             type: "user",
-            content: item.category,
+            content: selectedOption,
         };
 
         addMessages(userObj);
@@ -69,41 +74,50 @@ export default function ChatScreen() {
                 id: (Date.now() + 1).toString(),
                 type: "bot",
                 content: "",
-                options: [...subOptions],
+                options: [...questions],
                 isInitial: false,
-                index: item.id,
-                isMenu: isMenu,
+                category: selectedOption,
+                // index: item.id,
+                // isMenu: isMenu,
             };
             addMessages(botObj);
         }, 1200);
+        console.log('handle generate options...end');
     }
 
-    function handleGenerateAnswer(index, child, isMenu) {
+    async function handleGenerateAnswer(category, question) {
+        //cancellation replaces by category;
+        const data = await dataFetch(category);
+        // console.log(data);
+        const answer = data.faqs.filter((item) => item.question === question)[0].answer;
 
-        let res = "";
-        if (isMenu) {
-            const answer = dummyData[index - 1].sub_queries.find(
-                (item) => item.question === child
-            )?.answer;
-            // ans += answer;
-
-            res += answer;
-        }
-        else {
-            const answer = recentFaqsData[index - 1].sub_queries.find(
-                (item) => item.question === child
-            )?.answer;
-            // ans += answer;
-
-            res += answer;
+        console.log(answer);
 
 
-        }
+        // let res = "";
+        // if (isMenu) {
+        //     const answer = dummyData[index - 1].sub_queries.find(
+        //         (item) => item.question === child
+        //     )?.answer;
+        //     // ans += answer;
+
+        //     res += answer;
+        // }
+        // else {
+        //     const answer = recentFaqsData[index - 1].sub_queries.find(
+        //         (item) => item.question === child
+        //     )?.answer;
+        //     // ans += answer;
+
+        //     res += answer;
+
+
+        // }
 
         const userObj = {
             id: Date.now().toString(),
             type: "user",
-            content: child,
+            content: question,
         };
 
         addMessages(userObj);
@@ -115,7 +129,7 @@ export default function ChatScreen() {
             const botObj = {
                 id: (Date.now() + 1).toString(),
                 type: "bot",
-                content: res,
+                content: answer,
             };
             addMessages(botObj);
         }, 1200);
@@ -146,12 +160,13 @@ export default function ChatScreen() {
 
             // Options response
             if (item.options?.length) {
+                console.log(item);
                 return (
                     <BotContainer>
                         {item.options.map((subOption) => (
                             <SecondaryButton
                                 onPress={() =>
-                                    handleGenerateAnswer(item.index, subOption, item.isMenu)
+                                    handleGenerateAnswer(item.category, subOption)
                                 }
                                 key={subOption}
                             >

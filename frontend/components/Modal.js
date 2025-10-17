@@ -1,15 +1,36 @@
-import { useState,useRef} from "react";
+import { useState, useRef, useEffect } from "react";
 import { Animated, FlatList, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, PanResponder } from "react-native"
 import { dummyData } from "../data/dummyData";
-const menuOptions = dummyData.map((item) => item.category);
+import { dataFetch } from "./util/auth";
+// const menuOptions = dummyData.map((item) => item.category);
 export default function Modal({ SHEET_HEIGHT, closeMenu, isSheetMounted, sheetStyle, handleGenerateOptions }) {
 
     const [selectedMenu, setSelectedMenu] = useState(null);
-    function handleMenu(index, option) {
-        setSelectedMenu(index);
+    const [menuOptions, setMenuOptions] = useState({});
+    useEffect(() => {
+        async function fetch() {
+
+            const data = await dataFetch();
+            setMenuOptions(data.categories);
+        }
+        fetch();
+    }, [])
+    async function handleMenu(option) {
+        console.log(option);
+        const data = await dataFetch(option);
+        console.log(data);
+        const questions = data.faqs.map((item) => item.question);
+        // console.log(questions);
+        // const selectedOption = data.category;
+        // console.log(selectedOption);
+        // setSelectedMenu(index);
+
+        handleGenerateOptions(option, questions);
         closeMenu();
-        handleGenerateOptions(option, true);
+
     }
+
+
     const translateY = useRef(new Animated.Value(0)).current;
 
     const panResponder = useRef(
@@ -67,16 +88,20 @@ export default function Modal({ SHEET_HEIGHT, closeMenu, isSheetMounted, sheetSt
 
                     <FlatList
                         data={menuOptions}
-                        keyExtractor={(i, idx) => String(idx)}
-                        renderItem={({ item, index }) => (
+                        keyExtractor={(item) => String(item)}
+                        renderItem={({ item }) => (
                             <TouchableOpacity
-                                onPress={() => handleMenu(index, item)}
+                                onPress={() =>
+                                    handleMenu(item)
+
+
+                                }
                                 style={styles.modalRow}
                             >
                                 <Text style={styles.modalText}>{item}</Text>
-                                <View style={styles.radioOuter}>
+                                {/* <View style={styles.radioOuter}>
                                     {selectedMenu === index && <View style={styles.radioInner} />}
-                                </View>
+                                </View> */}
                             </TouchableOpacity>
                         )}
                         ItemSeparatorComponent={() => <View style={{ height: 8 }} />}

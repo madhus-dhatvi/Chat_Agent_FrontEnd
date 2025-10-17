@@ -7,7 +7,7 @@ export default function UserContainer({ children }) {
             <View style={styles.msgContainer}>
                 <Text style={styles.userText}>{children}</Text>
             </View>
-            <Avatar initials={'SJ'} />
+            <Avatar mode="human" />
         </View>
     );
 }
