@@ -54,8 +54,8 @@ export default function ChatScreen() {
     function handleGenerateOptions(selectedOption, questions) {
         // const item = isMenu ? dummyData.find((i) => i.category === option) : recentFaqsData.find((i) => i.category === option);
         // const subOptions = item.sub_queries.map((i) => i.question);
-        console.log('handle generate options...');
-        console.log(selectedOption);
+        // console.log('handle generate options...');
+        // console.log(selectedOption);
         const userObj = {
             id: Date.now().toString(),
             type: "user",
@@ -139,14 +139,14 @@ export default function ChatScreen() {
             if (item.isInitial) {
                 return (
                     <BotContainer content={item.content}>
-                        {item.options?.map((option) => (
+                        {/* {item.options?.map((option) => (
                             <SecondaryButton
                                 onPress={() => handleGenerateOptions(option, false)}
                                 key={option}
                             >
                                 {option}
                             </SecondaryButton>
-                        ))}
+                        ))} */}
 
                         <MenuButton openMenu={openMenu} />
                     </BotContainer>

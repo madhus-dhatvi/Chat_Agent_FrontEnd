@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     buttonsContainer: {
         flexWrap: "wrap",
         flexDirection: "row",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         marginTop: 10,
         gap: 6,
     },
